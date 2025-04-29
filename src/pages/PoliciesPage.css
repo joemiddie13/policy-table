@@ -1,0 +1,87 @@
+.policies-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filters button {
+  padding: 8px 16px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.filters button:hover {
+  background-color: #e0e0e0;
+}
+
+.filters button.active {
+  background-color: #228be6;
+  color: white;
+}
+
+.policy-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.policy-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.policy-card h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.4rem;
+}
+
+.policy-card .category {
+  display: inline-block;
+  background-color: #e9ecef;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  text-transform: capitalize;
+}
+
+.policy-card p {
+  color: #495057;
+  margin-bottom: 15px;
+  line-height: 1.5;
+}
+
+.policy-card .votes {
+  display: flex;
+  gap: 10px;
+}
+
+.policy-card .votes button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.policy-card .votes button:hover {
+  background-color: #e9ecef;
+}

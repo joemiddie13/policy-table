@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { addPolicy } from '../../features/policies/policiesSlice';
 import './PolicyForm.css';
 
 function PolicyForm() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  
   // State for form fields using the controlled component pattern
   const [formData, setFormData] = useState({
     title: '',
@@ -66,12 +72,16 @@ function PolicyForm() {
       return;
     }
     
-    // Here you would typically submit the data to an API or Redux store
-    // For now, we'll just console.log and show success message
-    console.log('Form submitted:', formData);
+    // Dispatch the action to add the policy to Redux store
+    dispatch(addPolicy({
+      ...formData,
+      author: 'current_user' // Later replace with actual authentication
+    }));
     
-    // Show success message and reset form
+    // Show success message
     setSubmitted(true);
+    
+    // Reset form
     setFormData({
       title: '',
       category: 'healthcare',
@@ -81,9 +91,10 @@ function PolicyForm() {
       potentialChallenges: ''
     });
     
-    // Hide success message after 3 seconds
+    // Hide success message after 3 seconds and navigate to policies page
     setTimeout(() => {
       setSubmitted(false);
+      navigate('/policies');
     }, 3000);
   };
 
