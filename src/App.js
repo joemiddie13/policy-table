@@ -4,6 +4,7 @@ import Header from './components/layout/Header';
 import HomePage from './pages/HomePage';
 import PoliciesPage from './pages/PoliciesPage';
 import AboutPage from './pages/AboutPage';
+import SubmitPolicyPage from './pages/SubmitPolicyPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/policies" element={<PoliciesPage />} />
+            <Route path="/submit-policy" element={<SubmitPolicyPage />} />
             <Route path="/about" element={<AboutPage />} />
           </Routes>
         </main>
