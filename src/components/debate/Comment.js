@@ -1,10 +1,18 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { upvoteComment, downvoteComment } from '../../features/policies/policiesSlice';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { upvoteComment, downvoteComment, selectPolicyById } from '../../features/policies/policiesSlice';
+import CommentForm from './CommentForm';
 import './Comment.css';
 
-function Comment({ comment, policyId }) {
+function Comment({ comment, policyId, level = 0 }) {
   const dispatch = useDispatch();
+  const [showReplyForm, setShowReplyForm] = useState(false);
+  
+  // Get the policy to access all comments
+  const policy = useSelector(state => selectPolicyById(state, policyId));
+  
+  // Find child comments
+  const childComments = policy.comments.filter(c => c.parentId === comment.id);
   
   // Format the timestamp
   const formattedDate = new Date(comment.timestamp).toLocaleString();
@@ -31,8 +39,16 @@ function Comment({ comment, policyId }) {
     dispatch(downvoteComment({ policyId, commentId: comment.id }));
   };
   
+  const handleReplyClick = () => {
+    setShowReplyForm(true);
+  };
+  
+  const handleCancelReply = () => {
+    setShowReplyForm(false);
+  };
+  
   return (
-    <div className={`comment ${getPositionClass(comment.type)}`}>
+    <div className={`comment ${getPositionClass(comment.type)} level-${level}`}>
       <div className="comment-header">
         <div className="comment-author">
           <span className="author-name">{comment.author}</span>
@@ -62,10 +78,34 @@ function Comment({ comment, policyId }) {
             👎 {comment.downvotes}
           </button>
         </div>
-        <button className="reply-button">
+        <button 
+          className="reply-button"
+          onClick={handleReplyClick}
+        >
           Reply
         </button>
       </div>
+      
+      {showReplyForm && (
+        <CommentForm 
+          policyId={policyId} 
+          parentId={comment.id}
+          onCancel={handleCancelReply}
+        />
+      )}
+      
+      {childComments.length > 0 && (
+        <div className="comment-replies">
+          {childComments.map(childComment => (
+            <Comment 
+              key={childComment.id}
+              comment={childComment}
+              policyId={policyId}
+              level={level + 1}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

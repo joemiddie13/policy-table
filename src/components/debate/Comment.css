@@ -122,3 +122,29 @@
   background-color: #e9ecef;
   border-color: #adb5bd;
 }
+
+/* Nested comment styling */
+.comment-replies {
+  margin-left: 40px;
+  margin-top: 15px;
+}
+
+/* Level-based indentation */
+.comment.level-1 {
+  margin-left: 20px;
+}
+
+.comment.level-2 {
+  margin-left: 40px;
+}
+
+.comment.level-3 {
+  margin-left: 60px;
+}
+
+/* Limit nesting depth visually */
+.comment.level-4,
+.comment.level-5,
+.comment.level-6 {
+  margin-left: 80px;
+}

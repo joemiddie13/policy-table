@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addComment } from '../../features/policies/policiesSlice';
+import './CommentForm.css';
 
-function CommentForm({ policyId }) {
+function CommentForm({ policyId, parentId = null, onCancel = null }) {
   const dispatch = useDispatch();
   const [text, setText] = useState('');
   const [type, setType] = useState('neutral');
@@ -20,7 +21,8 @@ function CommentForm({ policyId }) {
       policyId,
       comment: {
         text: text.trim(),
-        type
+        type,
+        parentId
       }
     }));
 
@@ -28,11 +30,18 @@ function CommentForm({ policyId }) {
     setText('');
     setType('neutral');
     setError('');
+    
+    // Call onCancel if this is a reply form
+    if (onCancel) {
+      onCancel();
+    }
   };
 
+  const isReply = parentId !== null;
+
   return (
-    <form onSubmit={handleSubmit} className="comment-form">
-      <h3>Add Your Argument</h3>
+    <form onSubmit={handleSubmit} className={`comment-form ${isReply ? 'reply-form' : ''}`}>
+      <h3>{isReply ? 'Reply to Comment' : 'Add Your Argument'}</h3>
       
       <div className="form-group">
         <label>Position</label>
@@ -62,20 +71,27 @@ function CommentForm({ policyId }) {
       </div>
 
       <div className="form-group">
-        <label htmlFor="argument">Your Argument</label>
+        <label htmlFor="argument">Your {isReply ? 'Reply' : 'Argument'}</label>
         <textarea
           id="argument"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          placeholder="Share your thoughts on this policy..."
-          rows="4"
+          placeholder={isReply ? 'Share your reply...' : 'Share your thoughts on this policy...'}
+          rows={isReply ? '3' : '4'}
         />
         {error && <p className="error-text">{error}</p>}
       </div>
 
-      <button type="submit" className="submit-button">
-        Submit Argument
-      </button>
+      <div className="form-actions">
+        <button type="submit" className="submit-button">
+          Submit {isReply ? 'Reply' : 'Argument'}
+        </button>
+        {isReply && onCancel && (
+          <button type="button" className="cancel-button" onClick={onCancel}>
+            Cancel
+          </button>
+        )}
+      </div>
     </form>
   );
 }
