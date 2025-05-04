@@ -1,19 +1,14 @@
-// AI Service for interacting with Anthropic API
+// AI Service for interacting with Anthropic API through proxy server
 // This service handles all AI-related operations for the PolicyForum
 
 class AIService {
   constructor() {
-    this.baseURL = 'https://api.anthropic.com/v1/messages';
+    // Use the proxy server instead of calling Anthropic directly
+    this.baseURL = 'http://localhost:3001/api/anthropic';
     this.model = 'claude-3-sonnet-20240229'; // Using Claude 3 Sonnet
   }
 
-  // Get API key from Redux store
-  getApiKey() {
-    // This will be passed in when calling methods
-    return null;
-  }
-
-  // Base method for making API calls to Anthropic
+  // Base method for making API calls to Anthropic through our proxy
   async callAnthropic(apiKey, messages, maxTokens = 1000) {
     if (!apiKey) {
       throw new Error('API key is required');
@@ -24,8 +19,7 @@ class AIService {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01'
+          'x-api-key': apiKey, // Send API key as header, not in body
         },
         body: JSON.stringify({
           model: this.model,
@@ -36,13 +30,20 @@ class AIService {
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error?.message || 'API call failed');
+        console.error('API Error Response:', error);
+        throw new Error(error.error?.message || `API call failed with status ${response.status}`);
       }
 
       const data = await response.json();
       return data.content[0].text;
     } catch (error) {
-      console.error('Anthropic API Error:', error);
+      console.error('API Error:', error);
+      
+      // Provide more user-friendly error messages
+      if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+        throw new Error('Could not connect to the server. Please make sure the proxy server is running on port 3001.');
+      }
+      
       throw error;
     }
   }

@@ -63,6 +63,14 @@ function AISettingsModal({ isOpen, onClose }) {
         </div>
         
         <div className="modal-body">
+          <div className="server-status-note">
+            <h3>⚠️ Important</h3>
+            <p>Make sure the proxy server is running. Start it with:</p>
+            <code>npm run start:server</code>
+            <p>Or run both servers together with:</p>
+            <code>npm run start:all</code>
+          </div>
+
           <p className="instructions">
             To enable AI features, please enter your Anthropic API key. 
             You can get one from <a href="https://console.anthropic.com/" target="_blank" rel="noopener noreferrer">console.anthropic.com</a>
@@ -113,7 +121,7 @@ function AISettingsModal({ isOpen, onClose }) {
 
           <div className="security-note">
             <h3>Security Note</h3>
-            <p>Your API key is stored locally in your browser and never sent to our servers. Please keep your API key secure and do not share it with others.</p>
+            <p>Your API key is stored locally in your browser and sent securely to the proxy server. The proxy server keeps your API key secure and prevents CORS issues.</p>
           </div>
         </div>
       </div>
