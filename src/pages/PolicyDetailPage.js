@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectPolicyById, upvotePolicy, downvotePolicy } from '../features/policies/policiesSlice';
 import CommentForm from '../components/debate/CommentForm';
 import Comment from '../components/debate/Comment';
+import AISummary from '../components/ai/AISummary';
 import './PolicyDetailPage.css';
 
 function PolicyDetailPage() {
@@ -22,6 +23,8 @@ function PolicyDetailPage() {
         <p className="category">{policy.category}</p>
         <p className="author">Submitted by: {policy.author} on {new Date(policy.dateSubmitted).toLocaleDateString()}</p>
       </div>
+
+      <AISummary policy={policy} />
 
       <div className="policy-content">
         <section>

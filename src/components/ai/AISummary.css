@@ -1,0 +1,114 @@
+.ai-summary-container {
+  margin: 20px 0;
+}
+
+.generate-summary-button {
+  background-color: #228be6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+
+.generate-summary-button:hover:not(:disabled) {
+  background-color: #1c7ed6;
+}
+
+.generate-summary-button:disabled {
+  background-color: #adb5bd;
+  cursor: not-allowed;
+}
+
+.ai-feature-disabled {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 15px;
+  color: #6c757d;
+  text-align: center;
+}
+
+.ai-summary {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 15px;
+}
+
+.ai-summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.ai-summary-header h3 {
+  margin: 0;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.regenerate-button {
+  background: none;
+  border: 1px solid #dee2e6;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s;
+}
+
+.regenerate-button:hover:not(:disabled) {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+  transform: rotate(180deg);
+}
+
+.regenerate-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ai-summary-content {
+  color: #495057;
+  line-height: 1.6;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.ai-summary-footer {
+  font-size: 12px;
+  color: #6c757d;
+  text-align: right;
+  border-top: 1px solid #dee2e6;
+  padding-top: 10px;
+  margin-top: 15px;
+}
+
+.ai-error {
+  background-color: #f8d7da;
+  border: 1px solid #f5c2c7;
+  border-radius: 8px;
+  padding: 12px;
+  color: #842029;
+  margin-top: 15px;
+}
+
+.ai-error p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
