@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectPolicyById, upvotePolicy, downvotePolicy } from '../features/policies/policiesSlice';
 import CommentForm from '../components/debate/CommentForm';
+import Comment from '../components/debate/Comment';
 import './PolicyDetailPage.css';
 
 function PolicyDetailPage() {
@@ -58,10 +59,16 @@ function PolicyDetailPage() {
         <CommentForm policyId={policy.id} />
         
         {policy.comments.length === 0 ? (
-          <p>No comments yet. Be the first to share your thoughts!</p>
+          <p className="no-comments">No comments yet. Be the first to share your thoughts!</p>
         ) : (
           <div className="comments-list">
-            {/* We'll add comments display here in the next step */}
+            {policy.comments.map(comment => (
+              <Comment 
+                key={comment.id} 
+                comment={comment} 
+                policyId={policy.id} 
+              />
+            ))}
           </div>
         )}
       </div>
