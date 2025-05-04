@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { motion, AnimatePresence } from 'framer-motion';
 import { selectApiKey, selectIsAiConfigured } from '../../features/ai/aiSlice';
 import { aiService } from '../../services/aiService';
+import TypewriterText from './TypewriterText';
+import AILoadingAnimation from './AILoadingAnimation';
 import './AISummary.css';
 
 function AISummary({ policy }) {
@@ -9,6 +12,7 @@ function AISummary({ policy }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [showSummary, setShowSummary] = useState(false);
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
   
   const apiKey = useSelector(selectApiKey);
   const isAIConfigured = useSelector(selectIsAiConfigured);
@@ -21,6 +25,7 @@ function AISummary({ policy }) {
 
     setIsLoading(true);
     setError('');
+    setIsTypingComplete(false);
     
     try {
       const generatedSummary = await aiService.generatePolicySummary(apiKey, policy);
@@ -33,6 +38,10 @@ function AISummary({ policy }) {
     }
   };
 
+  const handleTypingComplete = () => {
+    setIsTypingComplete(true);
+  };
+
   if (!isAIConfigured) {
     return (
       <div className="ai-summary-container">
@@ -43,45 +52,110 @@ function AISummary({ policy }) {
     );
   }
 
+  // Animation variants for smooth transitions
+  const containerVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.5 }
+    },
+    exit: { 
+      opacity: 0, 
+      y: -20,
+      transition: { duration: 0.3 }
+    }
+  };
+
   return (
     <div className="ai-summary-container">
-      {!showSummary && (
-        <button 
-          className="generate-summary-button"
-          onClick={generateSummary}
-          disabled={isLoading}
-        >
-          {isLoading ? 'Generating Summary...' : '🤖 Generate AI Summary'}
-        </button>
-      )}
+      <AnimatePresence mode="wait">
+        {!showSummary && !isLoading && (
+          <motion.button 
+            key="generate-button"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="generate-summary-button"
+            onClick={generateSummary}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            🤖 Generate AI Summary
+          </motion.button>
+        )}
 
-      {error && (
-        <div className="ai-error">
-          <p>❌ {error}</p>
-        </div>
-      )}
+        {isLoading && (
+          <motion.div
+            key="loading"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <AILoadingAnimation />
+          </motion.div>
+        )}
 
-      {showSummary && summary && (
-        <div className="ai-summary">
-          <div className="ai-summary-header">
-            <h3>🤖 AI Summary</h3>
-            <button 
-              className="regenerate-button"
-              onClick={generateSummary}
-              disabled={isLoading}
-              title="Regenerate summary"
+        {error && (
+          <motion.div 
+            key="error"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="ai-error"
+          >
+            <p>❌ {error}</p>
+          </motion.div>
+        )}
+
+        {showSummary && summary && !isLoading && (
+          <motion.div 
+            key="summary"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="ai-summary"
+          >
+            <div className="ai-summary-header">
+              <h3>🤖 AI Summary</h3>
+              <motion.button 
+                className="regenerate-button"
+                onClick={generateSummary}
+                disabled={isLoading}
+                title="Regenerate summary"
+                whileHover={{ scale: 1.1, rotate: 180 }}
+                whileTap={{ scale: 0.9 }}
+                transition={{ duration: 0.3 }}
+              >
+                🔄
+              </motion.button>
+            </div>
+            <div className="ai-summary-content">
+              {isTypingComplete ? (
+                summary
+              ) : (
+                <TypewriterText 
+                  text={summary} 
+                  delay={30}
+                  onComplete={handleTypingComplete}
+                />
+              )}
+            </div>
+            <motion.div 
+              className="ai-summary-footer"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: isTypingComplete ? 1 : 0 }}
+              transition={{ duration: 0.5 }}
             >
-              🔄
-            </button>
-          </div>
-          <div className="ai-summary-content">
-            {summary}
-          </div>
-          <div className="ai-summary-footer">
-            Generated by AI • Results may vary
-          </div>
-        </div>
-      )}
+              Generated by AI • Results may vary
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
