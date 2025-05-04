@@ -75,17 +75,45 @@ const policiesSlice = createSlice({
       state.currentCategory = action.payload;
     },
     
-    // Add a comment to a policy
+    // Add a comment/argument to a policy
     addComment: (state, action) => {
       const { policyId, comment } = action.payload;
       const policy = state.items.find(p => p.id === policyId);
       if (policy) {
         policy.comments.push({
           id: Date.now().toString(),
-          text: comment,
+          text: comment.text,
+          type: comment.type, // 'pro', 'con', or 'neutral'
           author: 'current_user', // Replace with actual user authentication
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
+          upvotes: 0,
+          downvotes: 0,
+          parentId: comment.parentId || null // For threading
         });
+      }
+    },
+    
+    // Upvote a comment
+    upvoteComment: (state, action) => {
+      const { policyId, commentId } = action.payload;
+      const policy = state.items.find(p => p.id === policyId);
+      if (policy) {
+        const comment = policy.comments.find(c => c.id === commentId);
+        if (comment) {
+          comment.upvotes += 1;
+        }
+      }
+    },
+    
+    // Downvote a comment
+    downvoteComment: (state, action) => {
+      const { policyId, commentId } = action.payload;
+      const policy = state.items.find(p => p.id === policyId);
+      if (policy) {
+        const comment = policy.comments.find(c => c.id === commentId);
+        if (comment) {
+          comment.downvotes += 1;
+        }
       }
     }
   }
@@ -97,7 +125,9 @@ export const {
   upvotePolicy, 
   downvotePolicy, 
   setCategory, 
-  addComment 
+  addComment,
+  upvoteComment,
+  downvoteComment
 } = policiesSlice.actions;
 
 // Selectors

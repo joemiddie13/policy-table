@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { selectFilteredPolicies, setCategory, upvotePolicy, downvotePolicy } from '../features/policies/policiesSlice';
 import './PoliciesPage.css';
 
@@ -11,6 +12,11 @@ function PoliciesPage() {
   const handleCategoryChange = (category) => {
     setActiveCategory(category);
     dispatch(setCategory(category));
+  };
+
+  const handleVote = (e, action, policyId) => {
+    e.preventDefault(); // Prevent navigation when clicking vote buttons
+    dispatch(action(policyId));
   };
 
   return (
@@ -55,19 +61,21 @@ function PoliciesPage() {
           <p>No policies yet. Be the first to create one!</p>
         ) : (
           policies.map(policy => (
-            <div key={policy.id} className="policy-card">
-              <h2>{policy.title}</h2>
-              <p className="category">{policy.category}</p>
-              <p>{policy.problemStatement}</p>
-              <div className="votes">
-                <button onClick={() => dispatch(upvotePolicy(policy.id))}>
-                  👍 {policy.upvotes}
-                </button>
-                <button onClick={() => dispatch(downvotePolicy(policy.id))}>
-                  👎 {policy.downvotes}
-                </button>
+            <Link to={`/policies/${policy.id}`} key={policy.id} className="policy-card-link">
+              <div className="policy-card">
+                <h2>{policy.title}</h2>
+                <p className="category">{policy.category}</p>
+                <p>{policy.problemStatement}</p>
+                <div className="votes">
+                  <button onClick={(e) => handleVote(e, upvotePolicy, policy.id)}>
+                    👍 {policy.upvotes}
+                  </button>
+                  <button onClick={(e) => handleVote(e, downvotePolicy, policy.id)}>
+                    👎 {policy.downvotes}
+                  </button>
+                </div>
               </div>
-            </div>
+            </Link>
           ))
         )}
       </div>

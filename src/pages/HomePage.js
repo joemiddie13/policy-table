@@ -3,7 +3,7 @@ import React from 'react';
 function HomePage() {
   return (
     <div className="home-page">
-      <h1>Welcome to PolicyTable</h1>
+      <h1>Welcome to Policy Table</h1>
       <p>A democratic platform for policy discussion and debate</p>
       <div className="features">
         <div className="feature">

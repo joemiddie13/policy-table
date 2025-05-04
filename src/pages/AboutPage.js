@@ -3,7 +3,7 @@ import React from 'react';
 function AboutPage() {
   return (
     <div className="about-page">
-      <h1>About PolicyTable</h1>
+      <h1>About Policy Table</h1>
       <p>
         PolicyTable is a platform for democratic policy discussion, 
         where citizens can propose, debate, and vote on policy ideas.
