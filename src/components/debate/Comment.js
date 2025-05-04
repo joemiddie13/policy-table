@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { upvoteComment, downvoteComment, selectPolicyById } from '../../features/policies/policiesSlice';
 import CommentForm from './CommentForm';
+import EvidenceLink from './EvidenceLink';
 import './Comment.css';
 
 function Comment({ comment, policyId, level = 0 }) {
@@ -85,6 +86,12 @@ function Comment({ comment, policyId, level = 0 }) {
           Reply
         </button>
       </div>
+      
+      <EvidenceLink 
+        policyId={policyId}
+        commentId={comment.id}
+        existingLinks={comment.evidenceLinks || []}
+      />
       
       {showReplyForm && (
         <CommentForm 

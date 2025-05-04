@@ -88,8 +88,44 @@ const policiesSlice = createSlice({
           timestamp: new Date().toISOString(),
           upvotes: 0,
           downvotes: 0,
-          parentId: comment.parentId || null // For threading
+          parentId: comment.parentId || null, // For threading
+          evidenceLinks: comment.evidenceLinks || [] // For evidence support
         });
+      }
+    },
+    
+    // Add evidence link to a comment
+    addEvidenceLink: (state, action) => {
+      const { policyId, commentId, evidenceLink } = action.payload;
+      const policy = state.items.find(p => p.id === policyId);
+      if (policy) {
+        const comment = policy.comments.find(c => c.id === commentId);
+        if (comment) {
+          if (!comment.evidenceLinks) {
+            comment.evidenceLinks = [];
+          }
+          comment.evidenceLinks.push({
+            id: Date.now().toString(),
+            url: evidenceLink.url,
+            title: evidenceLink.title,
+            description: evidenceLink.description,
+            addedAt: new Date().toISOString()
+          });
+        }
+      }
+    },
+    
+    // Remove evidence link from a comment
+    removeEvidenceLink: (state, action) => {
+      const { policyId, commentId, evidenceLinkId } = action.payload;
+      const policy = state.items.find(p => p.id === policyId);
+      if (policy) {
+        const comment = policy.comments.find(c => c.id === commentId);
+        if (comment && comment.evidenceLinks) {
+          comment.evidenceLinks = comment.evidenceLinks.filter(
+            link => link.id !== evidenceLinkId
+          );
+        }
       }
     },
     
@@ -127,7 +163,9 @@ export const {
   setCategory, 
   addComment,
   upvoteComment,
-  downvoteComment
+  downvoteComment,
+  addEvidenceLink,
+  removeEvidenceLink
 } = policiesSlice.actions;
 
 // Selectors
