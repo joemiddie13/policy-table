@@ -5,7 +5,7 @@ import { selectApiKey } from '../../features/ai/aiSlice';
 import { aiService } from '../../services/aiService';
 import './ResearchChat.css';
 
-function ResearchChat({ policy }) {
+function ResearchChat({ policy, sidePanel = false }) {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -139,7 +139,7 @@ function ResearchChat({ policy }) {
   };
 
   return (
-    <div className="research-chat-container">
+    <div className={`research-chat-container ${sidePanel ? 'side-panel' : ''}`}>
       <div className="messages-container">
         {messages.map((message, index) => (
           <motion.div

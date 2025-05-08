@@ -27,7 +27,6 @@ function PolicyDetailPage() {
 
       <div className="ai-features">
         <AISummary policy={policy} />
-        <ResearchAssistant policy={policy} />
       </div>
 
       <div className="policy-content">
@@ -81,6 +80,9 @@ function PolicyDetailPage() {
           </div>
         )}
       </div>
+      
+      {/* Research Assistant is now rendered outside the main content */}
+      <ResearchAssistant policy={policy} />
     </div>
   );
 }

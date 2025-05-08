@@ -5,6 +5,11 @@
   background-color: #f8fafc;
 }
 
+/* Specific styling for side panel */
+.research-chat-container.side-panel {
+  height: calc(100vh - 57px); /* Account for header height */
+}
+
 .messages-container {
   flex: 1;
   overflow-y: auto;
@@ -17,7 +22,7 @@
 .message {
   display: flex;
   flex-direction: column;
-  max-width: 80%;
+  max-width: 85%; /* Increased from 80% */
   padding: 12px 16px;
   border-radius: 12px;
   animation: fadeIn 0.3s ease-in-out;
@@ -25,7 +30,7 @@
 
 .user-message {
   align-self: flex-end;
-  background-color: #4f46e5;
+  background-color: #6d28d9; /* Changed from indigo to match button */
   color: white;
   border-bottom-right-radius: 4px;
 }
@@ -39,8 +44,11 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
+/* Make the message content wrap properly on small screens */
 .message-content {
   margin-bottom: 4px;
+  word-break: break-word; /* Ensures long words don't overflow */
+  overflow-wrap: break-word;
 }
 
 .message-timestamp {
@@ -74,7 +82,7 @@
   height: 8px;
   width: 8px;
   border-radius: 50%;
-  background-color: #4f46e5;
+  background-color: #6d28d9; /* Match other purple elements */
   display: inline-block;
   animation: bounce 1.3s infinite ease-in-out;
 }
@@ -129,13 +137,13 @@
 }
 
 .input-form input:focus {
-  border-color: #4f46e5;
+  border-color: #6d28d9; /* Match the purple theme */
 }
 
 .input-form button {
   padding: 12px 24px;
   margin-left: 8px;
-  background-color: #4f46e5;
+  background-color: #6d28d9; /* Match other purple elements */
   color: white;
   border: none;
   border-radius: 8px;
@@ -145,7 +153,7 @@
 }
 
 .input-form button:hover:not(:disabled) {
-  background-color: #4338ca;
+  background-color: #5b21b6; /* Darker purple on hover */
 }
 
 .input-form button:disabled {
@@ -155,7 +163,7 @@
 
 .suggested-questions {
   align-self: center;
-  width: 90%;
+  width: 95%; /* Increased from 90% */
   background-color: white;
   border-radius: 12px;
   padding: 16px;
@@ -190,4 +198,34 @@
 .question-button:hover {
   background-color: #e2e8f0;
   transform: translateY(-1px);
+}
+
+/* Add responsive adjustments for small screens */
+@media (max-width: 480px) {
+  .message {
+    max-width: 95%; /* Wider messages on very small screens */
+  }
+  
+  .input-form {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .input-form input {
+    width: 100%;
+  }
+  
+  .input-form button {
+    width: 100%;
+    margin-left: 0;
+  }
+  
+  /* Side panel adjustments for mobile */
+  .side-panel .input-form {
+    padding: 12px;
+  }
+  
+  .side-panel .messages-container {
+    padding: 12px;
+  }
 }
