@@ -5,6 +5,7 @@ import { selectPolicyById, upvotePolicy, downvotePolicy } from '../features/poli
 import CommentForm from '../components/debate/CommentForm';
 import Comment from '../components/debate/Comment';
 import AISummary from '../components/ai/AISummary';
+import ResearchAssistant from '../components/ai/ResearchAssistant';
 import './PolicyDetailPage.css';
 
 function PolicyDetailPage() {
@@ -24,7 +25,10 @@ function PolicyDetailPage() {
         <p className="author">Submitted by: {policy.author} on {new Date(policy.dateSubmitted).toLocaleDateString()}</p>
       </div>
 
-      <AISummary policy={policy} />
+      <div className="ai-features">
+        <AISummary policy={policy} />
+        <ResearchAssistant policy={policy} />
+      </div>
 
       <div className="policy-content">
         <section>
@@ -65,13 +69,15 @@ function PolicyDetailPage() {
           <p className="no-comments">No comments yet. Be the first to share your thoughts!</p>
         ) : (
           <div className="comments-list">
-            {policy.comments.map(comment => (
-              <Comment 
-                key={comment.id} 
-                comment={comment} 
-                policyId={policy.id} 
-              />
-            ))}
+            {policy.comments
+              .filter(comment => comment.parentId === null)
+              .map(comment => (
+                <Comment 
+                  key={comment.id} 
+                  comment={comment} 
+                  policyId={policy.id} 
+                />
+              ))}
           </div>
         )}
       </div>

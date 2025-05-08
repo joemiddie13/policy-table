@@ -104,3 +104,17 @@
   background-color: #f8f9fa;
   border-radius: 8px;
 }
+
+.ai-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .ai-features {
+    justify-content: flex-start;
+  }
+}

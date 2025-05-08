@@ -21,7 +21,6 @@ function TypewriterText({ text, delay = 20, onComplete }) {
         setIsComplete(true);
         if (onComplete) onComplete();
         
-        // Hide cursor after a short delay when complete
         setTimeout(() => setShowCursor(false), 1000);
       }
     }, delay);

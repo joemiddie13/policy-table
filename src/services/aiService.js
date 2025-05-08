@@ -159,6 +159,30 @@ Feedback:`;
 
     return this.callAnthropic(apiKey, messages, 800);
   }
+  
+  // Research Assistant method
+  async generateResearchResponse(apiKey, policy, question) {
+    const contextPrompt = `You are a helpful research assistant for a policy discussion platform. Users are discussing this policy proposal:
+
+Title: ${policy.title}
+Category: ${policy.category}
+Problem Statement: ${policy.problemStatement}
+Proposed Solution: ${policy.proposedSolution}
+Expected Outcomes: ${policy.expectedOutcomes}
+Potential Challenges: ${policy.potentialChallenges}
+
+The user is asking for information related to this policy. Please provide a helpful, informative, and balanced response. Include relevant facts, historical context, multiple perspectives, and cite sources when possible. Format your response in a readable way with sections and bullet points when appropriate.
+
+User's question: "${question}"
+
+Respond as a knowledgeable policy researcher would, providing context, nuance, and balanced information. Be concise but thorough.`;
+
+    const messages = [
+      { role: 'user', content: contextPrompt }
+    ];
+
+    return this.callAnthropic(apiKey, messages, 1500);
+  }
 }
 
 // Export singleton instance

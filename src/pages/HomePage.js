@@ -27,7 +27,7 @@ function HomePage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8 }}
                 >
-                  <span className="block">PolicyTable</span>
+                  <span className="block">Policy Table</span>
                   <span className="block text-blue-600">Democratic Policy Forum</span>
                 </motion.h1>
                 <motion.p 
