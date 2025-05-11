@@ -46,12 +46,6 @@ The application includes integration with AI capabilities (via Anthropic's Claud
 - **Sentiment Analysis:** Analyze debate tone and sentiment
 - **Quality/Civility Checking:** Pre-submission content checking
 
-## 🎬 Demo
-
-![PolicyTable Interface](screenshots/policy-table-screenshot.png)
-
-*Screenshot placeholder - Add an application screenshot here*
-
 ## 🛠️ Technologies Used
 
 ### Frontend
