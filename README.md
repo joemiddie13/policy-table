@@ -5,7 +5,11 @@
 [![Tailwind CSS Badge](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 [![Framer Motion Badge](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat&logo=framer&logoColor=white)](https://www.framer.com/motion/)
 
-![PolicyTable Demo Screenshot](policy-table-screenshot.png)
+<img width="1238" alt="image" src="https://github.com/user-attachments/assets/c8f09ebb-92de-4415-9492-0afff1255fb6" />
+
+<img width="1236" alt="image" src="https://github.com/user-attachments/assets/9d25ae60-302c-4483-8fa8-0d8c8cd2e6d1" />
+
+
 
 ## 📑 Table of Contents
 - [Overview](#overview)
