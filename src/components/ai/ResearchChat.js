@@ -13,6 +13,7 @@ function ResearchChat({ policy, sidePanel = false }) {
   
   const apiKey = useSelector(selectApiKey);
   const messagesEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
   
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -36,8 +37,6 @@ function ResearchChat({ policy, sidePanel = false }) {
   const handleSubmit = async (e) => {
     if (e) e.preventDefault();
     
-    console.log("Submit handler called with text:", inputText); // Debug log
-    
     if (!inputText.trim()) return;
     
     const userMessage = {
@@ -52,15 +51,11 @@ function ResearchChat({ policy, sidePanel = false }) {
     setError('');
     
     try {
-      console.log("Calling AI service with policy:", policy.title); // Debug log
-      
       const response = await aiService.generateResearchResponse(
         apiKey, 
         policy, 
         userMessage.text
       );
-      
-      console.log("Received response from AI service:", response.substring(0, 50) + "..."); // Debug log
       
       const aiMessage = {
         type: 'ai',
@@ -70,7 +65,7 @@ function ResearchChat({ policy, sidePanel = false }) {
       
       setMessages(prevMessages => [...prevMessages, aiMessage]);
     } catch (err) {
-      console.error('Research Assistant error:', err); // Debug log
+      console.error('Research Assistant error:', err);
       setError(err.message || 'Failed to generate response');
     } finally {
       setIsLoading(false);
@@ -140,7 +135,7 @@ function ResearchChat({ policy, sidePanel = false }) {
 
   return (
     <div className={`research-chat-container ${sidePanel ? 'side-panel' : ''}`}>
-      <div className="messages-container">
+      <div className="messages-container" ref={messagesContainerRef}>
         {messages.map((message, index) => (
           <motion.div
             key={index}

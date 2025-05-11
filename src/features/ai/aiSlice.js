@@ -9,6 +9,9 @@ const aiSlice = createSlice({
       autoSummarize: false,
       civilityCheck: true,
       suggestRelated: true
+    },
+    researchAssistant: {
+      isExpanded: false
     }
   },
   reducers: {
@@ -35,15 +38,30 @@ const aiSlice = createSlice({
       state.apiKey = null;
       state.isConfigured = false;
       localStorage.removeItem('anthropic_api_key');
+    },
+    
+    toggleResearchAssistantExpansion: (state) => {
+      state.researchAssistant.isExpanded = !state.researchAssistant.isExpanded;
+    },
+    
+    setResearchAssistantExpanded: (state, action) => {
+      state.researchAssistant.isExpanded = action.payload;
     }
   }
 });
 
-export const { setApiKey, updateSettings, clearApiKey } = aiSlice.actions;
+export const { 
+  setApiKey, 
+  updateSettings, 
+  clearApiKey,
+  toggleResearchAssistantExpansion,
+  setResearchAssistantExpanded
+} = aiSlice.actions;
 
 // Selectors
 export const selectApiKey = state => state.ai.apiKey;
 export const selectIsAiConfigured = state => state.ai.isConfigured;
 export const selectAiSettings = state => state.ai.settings;
+export const selectResearchAssistantState = state => state.ai.researchAssistant;
 
 export default aiSlice.reducer;

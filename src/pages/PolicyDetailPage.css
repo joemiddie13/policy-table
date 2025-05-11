@@ -2,6 +2,7 @@
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
+  padding-right: 70px; /* Add extra padding to account for the research sidebar */
 }
 
 .policy-header {
@@ -116,5 +117,21 @@
 @media (min-width: 768px) {
   .ai-features {
     justify-content: flex-start;
+  }
+}
+
+/* Responsive adjustments for the research sidebar */
+@media (max-width: 768px) {
+  .policy-detail-page {
+    padding-right: 20px;
+    padding-bottom: 60px; /* Add space for the bottom bar on mobile */
+  }
+}
+
+/* When the research sidebar is expanded, adjust the content width */
+@media (min-width: 1200px) {
+  .research-sidebar-expanded + .policy-detail-page {
+    max-width: calc(100% - 450px);
+    margin-right: 450px;
   }
 }

@@ -81,7 +81,7 @@ function PolicyDetailPage() {
         )}
       </div>
       
-      {/* Research Assistant is now rendered outside the main content */}
+      {/* Research Assistant is now a vertical sidebar */}
       <ResearchAssistant policy={policy} />
     </div>
   );

@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
-import { selectApiKey, selectIsAiConfigured } from '../../features/ai/aiSlice';
+import { 
+  selectApiKey, 
+  selectIsAiConfigured, 
+  selectResearchAssistantState,
+  toggleResearchAssistantExpansion
+} from '../../features/ai/aiSlice';
 import ResearchChat from './ResearchChat';
 import './ResearchAssistant.css';
 
 function ResearchAssistant({ policy }) {
-  const [isExpanded, setIsExpanded] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   
+  const dispatch = useDispatch();
   const apiKey = useSelector(selectApiKey);
   const isAIConfigured = useSelector(selectIsAiConfigured);
+  const { isExpanded } = useSelector(selectResearchAssistantState);
 
   // Track window width for responsive behavior
   useEffect(() => {
@@ -24,104 +30,119 @@ function ResearchAssistant({ policy }) {
 
   const toggleExpanded = () => {
     if (isAIConfigured) {
-      setIsExpanded(!isExpanded);
+      dispatch(toggleResearchAssistantExpansion());
     }
-  };
-
-  // Calculate panel width based on screen size
-  const getPanelWidth = () => {
-    if (windowWidth <= 640) return '100%'; // Full width on mobile
-    if (windowWidth <= 1024) return '400px'; // Medium width on tablets
-    return '450px'; // Larger width on desktops
   };
 
   // Animation variants
-  const tabVariants = {
-    closed: {
-      right: 0,
-      rotate: 0
-    },
-    open: {
-      right: 0,
-      rotate: 180
-    }
-  };
-
-  const panelVariants = {
-    closed: {
-      x: '100%',
-      opacity: 0,
+  const sidebarVariants = {
+    expanded: {
+      width: windowWidth <= 768 ? '100%' : '400px',
       transition: {
         type: 'spring',
         stiffness: 300,
         damping: 30
       }
     },
-    open: {
-      x: 0,
-      opacity: 1,
+    collapsed: {
+      width: '50px',
       transition: {
         type: 'spring',
-        stiffness: 300,
-        damping: 25
+        stiffness: 400,
+        damping: 40
+      }
+    }
+  };
+
+  const contentVariants = {
+    expanded: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        delay: 0.2,
+        duration: 0.2
+      }
+    },
+    collapsed: {
+      opacity: 0,
+      x: 50,
+      transition: {
+        duration: 0.2
+      }
+    }
+  };
+
+  const verticalTextVariants = {
+    expanded: {
+      opacity: 0,
+      transition: {
+        duration: 0.1
+      }
+    },
+    collapsed: {
+      opacity: 1,
+      transition: {
+        delay: 0.3,
+        duration: 0.2
       }
     }
   };
 
   if (!isAIConfigured) {
     return (
-      <div className="research-tab-container">
-        <div className="research-tab disabled" title="AI features not configured">
-          <span>🔍</span>
+      <div className="research-sidebar research-disabled">
+        <div className="research-sidebar-collapsed">
+          <div className="vertical-text disabled">Research Assistant</div>
         </div>
       </div>
     );
   }
 
   return (
-    <>
-      {/* Full-width overlay for mobile only */}
-      {isExpanded && windowWidth <= 640 && (
-        <div 
-          className="research-overlay"
-          onClick={() => setIsExpanded(false)}
-        />
-      )}
+    <motion.div
+      className="research-sidebar"
+      variants={sidebarVariants}
+      animate={isExpanded ? 'expanded' : 'collapsed'}
+      initial="collapsed"
+    >
+      {/* Collapsed state with vertical text */}
+      <motion.div 
+        className="research-sidebar-collapsed"
+        variants={verticalTextVariants}
+        animate={isExpanded ? 'expanded' : 'collapsed'}
+        onClick={!isExpanded ? toggleExpanded : undefined}
+      >
+        <div className="magnifying-glass">🔍</div>
+        <div className="vertical-text">Research Assistant</div>
+      </motion.div>
 
-      {/* Tab button */}
-      <div className="research-tab-container">
-        <motion.button
-          className={`research-tab ${isExpanded ? 'active' : ''}`}
-          onClick={toggleExpanded}
-          variants={tabVariants}
-          animate={isExpanded ? 'open' : 'closed'}
-          aria-label={isExpanded ? "Close Research Assistant" : "Open Research Assistant"}
-          title="Research Assistant"
-        >
-          {isExpanded ? '✕' : '🔍'}
-          <span className="tab-label">Research</span>
-        </motion.button>
-      </div>
-
-      {/* Slide-out panel */}
+      {/* Expanded state with chat interface */}
       <AnimatePresence>
         {isExpanded && (
           <motion.div
-            className="research-panel"
-            initial="closed"
-            animate="open"
-            exit="closed"
-            variants={panelVariants}
-            style={{ width: getPanelWidth() }}
+            className="research-sidebar-expanded"
+            variants={contentVariants}
+            initial="collapsed"
+            animate="expanded"
+            exit="collapsed"
           >
-            <div className="research-panel-header">
+            <div className="research-header">
               <h3>Research Assistant</h3>
+              <button 
+                className="collapse-button" 
+                onClick={toggleExpanded}
+                title="Collapse"
+              >
+                &raquo;&raquo;&raquo;
+              </button>
             </div>
-            <ResearchChat policy={policy} sidePanel={true} />
+            <div className="research-content">
+              <ResearchChat policy={policy} sidePanel={true} />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </motion.div>
   );
 }
 

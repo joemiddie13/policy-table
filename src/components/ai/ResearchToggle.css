@@ -1,0 +1,30 @@
+.research-toggle-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f1f5f9;
+  color: #4b5563;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.research-toggle-button:hover {
+  background-color: #e2e8f0;
+  color: #1f2937;
+}
+
+.toggle-icon {
+  font-size: 16px;
+}
+
+@media (max-width: 640px) {
+  .research-toggle-button {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+}
