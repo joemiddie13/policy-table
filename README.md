@@ -1,70 +1,225 @@
-# Getting Started with Create React App
+# PolicyTable
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![React Badge](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black)](https://reactjs.org/)
+[![Redux Badge](https://img.shields.io/badge/Redux-764ABC?style=flat&logo=redux&logoColor=white)](https://redux.js.org/)
+[![Tailwind CSS Badge](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Framer Motion Badge](https://img.shields.io/badge/Framer_Motion-0055FF?style=flat&logo=framer&logoColor=white)](https://www.framer.com/motion/)
 
-## Available Scripts
+![PolicyTable Demo Screenshot](policy-table-screenshot.png)
 
-In the project directory, you can run:
+## 📑 Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Demo](#demo)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [AI Integration](#ai-integration)
+- [AI Assistance Used](#ai-assistance-used)
+- [Future Improvements](#future-improvements)
+- [License](#license)
 
-### `npm start`
+## 📝 Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+PolicyTable is a democratic policy discussion platform where users can share policy ideas, upvote/downvote proposals, and engage in structured debates around various policy domains. It provides a structured environment for citizens to propose, discuss, and evaluate policy ideas with evidence-based arguments.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The application includes integration with AI capabilities (via Anthropic's Claude API) to enhance policy discussions through features like AI-generated summaries, research assistance, and more.
 
-### `npm test`
+## ✨ Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Core Features
+- **Policy Proposal Submission:** Structured forms for submitting policy ideas with specific fields
+- **Topic Categories:** Policy domains organized by categories (healthcare, education, environment, economy)
+- **Voting System:** Upvote/downvote functionality with analytics visualization
+- **Structured Debate:** Pro/con argument submission with evidence linking
+- **User Profiles:** Contribution history and reputation system
 
-### `npm run build`
+### AI Integration
+- **User-configurable AI setup:** API key management for Anthropic Claude
+- **Policy Summary Generation:** AI-generated concise summaries of policies
+- **Research Assistant:** Contextual AI that can answer questions about policy topics
+- **Sentiment Analysis:** Analyze debate tone and sentiment
+- **Quality/Civility Checking:** Pre-submission content checking
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🎬 Demo
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![PolicyTable Interface](screenshots/policy-table-screenshot.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+*Screenshot placeholder - Add an application screenshot here*
 
-### `npm run eject`
+## 🛠️ Technologies Used
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Frontend
+- React 19.1.0
+- Redux Toolkit 2.7.0
+- React Router DOM 7.5.3
+- Tailwind CSS 3.3.0
+- Framer Motion 12.10.0
+- Anthropic Claude API (via proxy server)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Backend
+- Express.js (lightweight proxy server for API)
+- CORS support
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 📦 Installation
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Prerequisites
+- Node.js (v18 or later)
+- npm or yarn
 
-## Learn More
+### Steps
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/policy-table.git
+cd policy-table
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn install
+```
 
-### Code Splitting
+3. Set up environment variables (optional):
+Create a `.env` file in the root directory with the following variables:
+```
+REACT_APP_PROXY_SERVER_URL=http://localhost:3001
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+4. Start the development server and proxy server together:
+```bash
+npm run start:all
+# or
+yarn start:all
+```
 
-### Analyzing the Bundle Size
+This will start:
+- React app on http://localhost:3000
+- Proxy server on http://localhost:3001
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 🚀 Usage
 
-### Making a Progressive Web App
+### Running the Application
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Start both the React app and proxy server:
+```bash
+npm run start:all
+```
 
-### Advanced Configuration
+2. Open your browser and navigate to [http://localhost:3000](http://localhost:3000)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+3. To use AI features:
+   - Click on the "Configure AI" button in the header
+   - Enter your Anthropic API key (get one from [console.anthropic.com](https://console.anthropic.com))
+   - Save your key (it's stored locally in your browser)
 
-### Deployment
+### Key User Flows
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+1. **Browsing Policies:**
+   - Visit the homepage
+   - Click "Browse Policies"
+   - Filter by category using the buttons at the top
 
-### `npm run build` fails to minify
+2. **Submitting a Policy:**
+   - Click "Submit Policy" in the navigation
+   - Fill out the structured form with your policy idea
+   - Submit and receive confirmation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+3. **Participating in Debate:**
+   - Click on any policy to view details
+   - Add your argument with pro/con/neutral positioning
+   - Provide evidence links to support your arguments
+   - Reply to other comments to create threaded discussions
+
+4. **Using AI Features:**
+   - Configure your API key first
+   - On a policy detail page, click "Generate AI Summary"
+   - Use the Research Assistant sidebar to ask policy-related questions
+
+## 📁 Project Structure
+
+```
+src/
+  components/
+    ai/              # AI-related components
+    debate/          # Debate and comment components
+    layout/          # Structural layout components
+    policy/          # Policy form and display components
+  features/
+    ai/              # AI Redux slice
+    policies/        # Policies Redux slice
+  pages/             # Main application pages
+  services/          # AI and API services
+  App.js             # Main application component
+  index.js           # Application entry point
+server.js            # Proxy server for API requests
+```
+
+## 🤖 AI Integration
+
+PolicyTable integrates with Anthropic's Claude API to provide several AI-enhanced features:
+
+1. **Policy Summary Generation:**
+   - AI-generated concise summaries of policy proposals
+   - Highlights key points and implications
+
+2. **Research Assistant:**
+   - Interactive chat interface for policy research
+   - Provides historical context, comparisons, and analysis
+   - Suggests related policies and considerations
+
+3. **Sentiment Analysis:**
+   - Analyzes the tone and sentiment of debates
+   - Helps maintain civil discourse
+
+4. **Quality Checking:**
+   - Pre-submission content evaluation
+   - Suggests improvements for clarity and civility
+
+Note: To use these features, you must provide your own Anthropic API key.
+
+## 🧠 AI Assistance Used
+
+During the development of PolicyTable, I used AI assistance in the following ways:
+
+1. **Code Structure Planning:**
+   - Used Claude to brainstorm overall component architecture
+   - Got help designing the Redux state structure
+
+2. **Redux Implementation:**
+   - AI helped with designing the policies slice with normalized state
+   - Assisted with creating efficient reducers and selectors
+
+3. **UI Component Design:**
+   - Got suggestions for styling and animations
+   - Used AI to generate Tailwind CSS classes for responsive design
+
+4. **API Integration:**
+   - Received help designing the AI service layer
+   - Debugged issues with the proxy server implementation
+
+5. **Error Handling and Edge Cases:**
+   - Used AI to identify potential error cases
+   - Implemented comprehensive error handling based on suggestions
+
+The AI was used as a collaborative partner, but all code implementation decisions and final architecture choices were made by me. I critically evaluated all suggestions and made adjustments based on my understanding of best practices and project requirements.
+
+## 🔮 Future Improvements
+
+- **User Authentication:** Add user accounts with profiles and authentication
+- **Enhanced AI Features:** Implement policy conflict detection and resolution suggestions
+- **Improved Visualizations:** Add data visualizations for policy impact analysis
+- **Mobile App:** Develop a companion mobile application
+- **Collaboration Tools:** Add features for collaborative policy drafting
+- **Integration with Public Data APIs:** Connect with government data sources
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+Made with ❤️ by Rocko Paul
